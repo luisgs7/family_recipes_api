@@ -7,10 +7,19 @@ services:
       - "8000:8000"
     volumes:
       - ./src:/src
-    command: python app.py
+    command: sh -c "python manage.py wait_for_db && python manage.py runserver 0.0.0.0:8000"
     depends_on:
       - db
       - cache
+    environment:
+      - DB_HOST=db
+      - DB_NAME=family_recipes
+      - DB_USER=postgres
+      - DB_PASS=postgres
+      - DB_PORT=5432
+      - DEBUG=${DEBUG}
+      - SECRET_KEY=${SECRET_KEY}
+      - ALLOWED_HOSTS=${ALLOWED_HOSTS}
   
   db:
     image: postgres:15.1-alpine
