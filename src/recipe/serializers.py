@@ -22,4 +22,5 @@ class RecipeSerializer(serializers.ModelSerializer):
             "category",
             "created_at",
             "updated_at",
+            "user",
         ]

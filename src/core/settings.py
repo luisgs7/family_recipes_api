@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     # My django apps
     'core',
     'recipe',
+    'custom_user',
     # Dependencies
     'rest_framework',
     'debug_toolbar',
@@ -145,3 +146,6 @@ INTERNAL_IPS = [
 DEBUG_TOOLBAR_CONFIG = {
     'SHOW_TOOLBAR_CALLBACK': lambda request: DEBUG,
 }
+
+
+AUTH_USER_MODEL= 'custom_user.User'
