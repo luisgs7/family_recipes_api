@@ -6,6 +6,7 @@ class Category(models.Model):
     """Model representing a category of recipes"""
 
     name = models.CharField(max_length=255)
+    user = models.ForeignKey(User, on_delete=models.PROTECT, null=True, blank=False)
 
     class Meta:
         db_table = "categories"
