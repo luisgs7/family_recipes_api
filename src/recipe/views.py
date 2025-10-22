@@ -4,6 +4,7 @@ from rest_framework import viewsets
 from recipe.models import Category, Recipe
 from recipe.permissions.recipe_permissions import RecipeUserPermission
 
+
 class CategoryViewSet(viewsets.ModelViewSet):
     permission_classes = [RecipeUserPermission]
     queryset = Category.objects.select_related("user").all()
