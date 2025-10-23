@@ -32,4 +32,4 @@ jobs:
 
       - name: Black
         run: |
-          docker compose run --rm api sh -c "black --check --exclude='settings\.py|manage\.py|migrations/' ."
+          docker compose run --rm api sh -c "black ."

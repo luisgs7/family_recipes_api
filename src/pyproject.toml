@@ -1,0 +1,31 @@
+[tool.black]
+line-length = 100
+target-version = ["py311"]
+skip-string-normalization = false
+
+exclude = '''
+(
+    /(
+        \.git
+        | \.venv
+        | venv
+        | env
+        | __pycache__
+        | migrations
+        | static
+        | media
+        | node_modules
+        | manage\.py
+        | settings\.py
+        | wsgi\.py
+        | asgi\.py
+        | core/settings\.py
+        | core/wsgi\.py
+        | core/asgi\.py
+        | src/manage\.py
+        | src/core/settings\.py
+        | src/core/wsgi\.py
+        | src/core/asgi\.py
+    )$
+)
+'''

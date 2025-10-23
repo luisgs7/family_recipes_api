@@ -6,7 +6,7 @@ from recipe.models import Category, Recipe
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ["id", "url", "name"]
+        fields = ["id", "url", "name", "user"]
 
 
 class RecipeSerializer(serializers.ModelSerializer):
@@ -22,4 +22,5 @@ class RecipeSerializer(serializers.ModelSerializer):
             "category",
             "created_at",
             "updated_at",
+            "user",
         ]
