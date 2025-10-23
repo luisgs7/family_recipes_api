@@ -5,3 +5,5 @@ flake8==7.3.0
 black==25.9.0
 django-debug-toolbar==6.0.0
 djangorestframework-simplejwt==5.5.1
+minio==7.2.7
+Pillow==10.4.0
