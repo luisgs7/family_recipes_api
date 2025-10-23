@@ -1,3 +1,4 @@
+from custom_user.permissions.custom_user_permissions import SuperUserPermission
 from recipe.serializers import CategorySerializer, RecipeSerializer
 from rest_framework import viewsets
 
@@ -6,12 +7,12 @@ from recipe.permissions.recipe_permissions import RecipeUserPermission
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
-    permission_classes = [RecipeUserPermission]
+    permission_classes = [SuperUserPermission, RecipeUserPermission]
     queryset = Category.objects.select_related("user").all()
     serializer_class = CategorySerializer
 
 
 class RecipeViewSet(viewsets.ModelViewSet):
-    permission_classes = [RecipeUserPermission]
+    permission_classes = [SuperUserPermission, RecipeUserPermission]
     queryset = Recipe.objects.select_related("category", "user").all()
     serializer_class = RecipeSerializer
