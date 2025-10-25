@@ -3,6 +3,8 @@ __pycache__/
 *.py[codz]
 *$py.class
 
+# MinIO data
+minio-data/
 # DB data
 db-data/
 
