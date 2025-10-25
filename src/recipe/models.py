@@ -5,7 +5,8 @@ from django.db import models
 
 def recipe_image_upload_path(instance, filename):
     """Generate upload path for recipe images based on recipe ID"""
-    return f'recipes/{instance.id}/{filename}'
+    return f"recipes/{instance.id}/{filename}"
+
 
 class Category(models.Model):
     """Model representing a category of recipes"""
@@ -34,7 +35,9 @@ class Recipe(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User, on_delete=models.PROTECT, null=True, blank=False)
-    image = models.ImageField(upload_to=recipe_image_upload_path, storage=MinIOStorage(), null=True, blank=True)
+    image = models.ImageField(
+        upload_to=recipe_image_upload_path, storage=MinIOStorage(), null=True, blank=True
+    )
 
     class Meta:
         db_table = "recipes"

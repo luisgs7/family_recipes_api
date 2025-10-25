@@ -5,7 +5,9 @@ from custom_user.serializers import UserSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import action
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework import generics
+from rest_framework_simplejwt.tokens import RefreshToken
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -28,3 +30,26 @@ class UserViewSet(viewsets.ModelViewSet):
                 return Response(serializer.data, status=status.HTTP_200_OK)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+
+class CreateUserView(generics.CreateAPIView):
+    permission_classes = [AllowAny]
+    serializer_class = UserSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.save()
+
+            # Generate JWT tokens
+            refresh = RefreshToken.for_user(user)
+            access_token = refresh.access_token
+
+            return Response(
+                {
+                    "user": serializer.data,
+                    "tokens": {"refresh": str(refresh), "access": str(access_token)},
+                },
+                status=status.HTTP_201_CREATED,
+            )
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

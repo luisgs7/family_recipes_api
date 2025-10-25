@@ -26,7 +26,7 @@ class MinIOStorage(Storage):
                 settings.MINIO_ENDPOINT,
                 access_key=settings.MINIO_ACCESS_KEY,
                 secret_key=settings.MINIO_SECRET_KEY,
-                secure=settings.MINIO_SECURE
+                secure=settings.MINIO_SECURE,
             )
         return self._client
 
@@ -40,7 +40,7 @@ class MinIOStorage(Storage):
             logger.warning(f"MinIO not available during initialization: {e}")
             # Don't fail during Django startup
 
-    def _open(self, name, mode='rb'):
+    def _open(self, name, mode="rb"):
         """Open file for reading"""
         try:
             response = self.client.get_object(self.bucket_name, name)
@@ -54,19 +54,19 @@ class MinIOStorage(Storage):
         try:
             # Reset file pointer to beginning
             content.seek(0)
-            
+
             # Get file size
             content.seek(0, 2)  # Seek to end
             file_size = content.tell()
             content.seek(0)  # Reset to beginning
-            
+
             # Upload file
             self.client.put_object(
                 self.bucket_name,
                 name,
                 content,
                 file_size,
-                content_type=self._get_content_type(name)
+                content_type=self._get_content_type(name),
             )
             logger.info(f"Successfully uploaded {name} to MinIO")
             return name
@@ -97,14 +97,14 @@ class MinIOStorage(Storage):
             objects = self.client.list_objects(self.bucket_name, prefix=path, recursive=True)
             files = []
             dirs = set()
-            
+
             for obj in objects:
-                relative_path = obj.object_name[len(path):].lstrip('/')
-                if '/' in relative_path:
-                    dirs.add(relative_path.split('/')[0])
+                relative_path = obj.object_name[len(path) :].lstrip("/")  # noqa: E203
+                if "/" in relative_path:
+                    dirs.add(relative_path.split("/")[0])
                 else:
                     files.append(relative_path)
-            
+
             return list(dirs), files
         except S3Error as e:
             logger.error(f"Error listing directory {path}: {e}")
@@ -127,10 +127,10 @@ class MinIOStorage(Storage):
         """Get content type based on file extension"""
         ext = os.path.splitext(filename)[1].lower()
         content_types = {
-            '.jpg': 'image/jpeg',
-            '.jpeg': 'image/jpeg',
-            '.png': 'image/png',
-            '.gif': 'image/gif',
-            '.webp': 'image/webp',
+            ".jpg": "image/jpeg",
+            ".jpeg": "image/jpeg",
+            ".png": "image/png",
+            ".gif": "image/gif",
+            ".webp": "image/webp",
         }
-        return content_types.get(ext, 'application/octet-stream')
+        return content_types.get(ext, "application/octet-stream")
