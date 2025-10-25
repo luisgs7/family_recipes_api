@@ -7,3 +7,6 @@ django-debug-toolbar==6.0.0
 djangorestframework-simplejwt==5.5.1
 minio==7.2.7
 Pillow==10.4.0
+django-cors-headers==4.7.0
+gunicorn==23.0.0
+whitenoise==6.8.2
