@@ -13,6 +13,6 @@ class CategoryViewSet(viewsets.ModelViewSet):
 
 
 class RecipeViewSet(viewsets.ModelViewSet):
-    permission_classes = [SuperUserPermission, RecipeUserPermission]
+    permission_classes = [RecipeUserPermission]
     queryset = Recipe.objects.select_related("category", "user").all()
     serializer_class = RecipeSerializer
